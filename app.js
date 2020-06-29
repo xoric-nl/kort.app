@@ -57,12 +57,14 @@ app.get('/error', function (req, res) {
 app.post('/api/new', function (req, res) {
     let responseObject = {
         "Status": 200,
-        "Message": 'Ok'
+        "Message": 'Ok',
+        'Version': 1.0
     };
+    let slug = makeSlug();
 
-    addToDB(makeSlug(), req.body.url);
+    addToDB(slug, req.body.url);
 
-    let newUrl = 'https://' + req.hostname + '/' + makeSlug();
+    let newUrl = 'https://' + req.hostname + '/' + slug;
 
     responseObject.Response = {
         newUrl: newUrl
