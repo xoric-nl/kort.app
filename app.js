@@ -9,10 +9,10 @@ const path = require('path');
 const mysql = require('mysql')
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'kort-app'
-})
+    user: 'admin_kort',
+    password: '8ir?R20l',
+    database: 'admin_kort-app'
+});
 
 // Web App Settings
 const port = 3000;
@@ -35,7 +35,6 @@ function addToDB(slug, url) {
 
     connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + url + '\')', function (err, rows, fields) {
         if (err) {
-            connection.release();
             throw err
         }
     });
@@ -76,7 +75,6 @@ app.post('/api/new', function (req, res) {
 app.get('/:slug', function(req, res) {
     connection.query('SELECT `url` FROM `shorts` WHERE `slug` = \'' + req.params.slug + '\'', function (err, rows, fields) {
         if (err) {
-            connection.release();
             throw err
         }
 
