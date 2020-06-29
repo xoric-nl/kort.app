@@ -1,0 +1,24 @@
+{
+  "name": "kort.app",
+  "version": "1.0.0",
+  "description": "Custom URL shortner",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/hacker115/kort.app.git"
+  },
+  "author": "J. Mulder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/hacker115/kort.app/issues"
+  },
+  "homepage": "https://gitlab.com/hacker115/kort.app#readme"
+}
