@@ -33,7 +33,7 @@ function makeSlug(length = slugLength) {
 function addToDB(slug, url) {
     console.log("Created slug <" + slug + "> with as url <" + url + ">");
 
-    connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + url.toLowerCase() + '\')', function (err, rows, fields) {
+    connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + url + '\')', function (err, rows, fields) {
         if (err) {
             throw err
         }
