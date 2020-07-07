@@ -88,5 +88,9 @@ app.get('/:slug', function(req, res) {
     });
 });
 
+app.get('/img/:image', function (req, res) {
+    res.sendFile(path.join(__dirname + '/img/' + req.params.image));
+})
+
 // Start Web App
 app.listen(port, () => console.log(`App running on http://localhost:${port}`));
