@@ -50,7 +50,7 @@ app.post('/api/new', function (req, res) {
         'Version': 1.0
     };
 
-    connection.query('SELECT `slug`, `url` FROM `shorts` WHERE `url` = \'' + url + '\'', function (err, rows, fields) {
+    connection.query('SELECT `slug`, `url` FROM `shorts` WHERE `url` = \'' + req.body.url + '\'', function (err, rows, fields) {
         if (err) {
             throw err
         }
@@ -60,11 +60,11 @@ app.post('/api/new', function (req, res) {
                 newUrl: 'https://' + req.hostname + '/' + rows[0]['slug']
             };
 
-            console.log("Returned existing slug <" + rows[0]['slug'] + "> with as url <" + url + ">");
+            console.log("Returned existing slug <" + rows[0]['slug'] + "> with as url <" + req.body.url + ">");
 
             res.status(responseObject.Status).json(responseObject);
         } else {
-            connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + url + '\')', function (err, rows, fields) {
+            connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + req.body.url + '\')', function (err, rows, fields) {
                 if (err) { throw err }
 
                 let slug = makeSlug();
@@ -72,7 +72,7 @@ app.post('/api/new', function (req, res) {
                     newUrl: 'https://' + req.hostname + '/' + slug
                 };
 
-                console.log("Created slug <" + slug + "> with as url <" + url + ">");
+                console.log("Created slug <" + slug + "> with as url <" + req.body.url + ">");
 
                 res.status(responseObject.Status).json(responseObject);
             });
