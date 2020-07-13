@@ -2,6 +2,9 @@
 const express = require('express');
 const app = express();
 
+// Require Middlewares
+const middlewares = require('./middlewares');
+
 // Require Path
 const path = require('path');
 
@@ -30,75 +33,79 @@ function makeSlug(length = slugLength) {
 }
 
 // Initiate Web App
-app.use(express.json()) // for parsing application/json
+app.use(express.json()); // for parsing application/json
 
 // Default Route
-app.get('/', function (req, res) {
+app.get('/', function (req, res, next) {
     res.status(200).sendFile(path.join(__dirname + '/html/index.html'));
 });
 
 // Error Route
-app.get('/error', function (req, res) {
+app.get('/error', function (req, res, next) {
     res.status(200).sendFile(path.join(__dirname + '/html/index.html'));
 });
 
 // New API Route
-app.post('/api/new', function (req, res) {
-    let responseObject = {
-        "Status": 200,
-        "Message": 'Ok',
-        'Version': 1.0
-    };
+app.post('/api/new', function (req, res, next) {
+    try {
+        let responseObject = {
+            "Status": 200,
+            "Message": 'Ok',
+            'Version': 1.0
+        };
 
-    connection.query('SELECT `slug`, `url` FROM `shorts` WHERE `url` = \'' + req.body.url + '\'', function (err, rows, fields) {
-        if (err) {
-            throw err
-        }
-
-        if (rows.length >= 1) {
-            responseObject.Response = {
-                newUrl: 'https://' + req.hostname + '/' + rows[0]['slug']
-            };
-
-            console.log("Returned existing slug <" + rows[0]['slug'] + "> with as url <" + req.body.url + ">");
-
-            res.status(responseObject.Status).json(responseObject);
-        } else {
-            connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + req.body.url + '\')', function (err, rows, fields) {
-                if (err) { throw err }
-
-                let slug = makeSlug();
+        connection.query('SELECT `slug`, `url` FROM `shorts` WHERE `url` = \'' + req.body.url + '\'', function (err, rows, fields) {
+            if (rows.length >= 1) {
                 responseObject.Response = {
-                    newUrl: 'https://' + req.hostname + '/' + slug
+                    newUrl: 'https://' + req.hostname + '/' + rows[0]['slug']
                 };
 
-                console.log("Created slug <" + slug + "> with as url <" + req.body.url + ">");
+                console.log("Returned existing slug <" + rows[0]['slug'] + "> with as url <" + req.body.url + ">");
 
                 res.status(responseObject.Status).json(responseObject);
-            });
-        }
-    });
-})
+            } else {
+                connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + req.body.url + '\')', function (err, rows, fields) {
+                    let slug = makeSlug();
+                    responseObject.Response = {
+                        newUrl: 'https://' + req.hostname + '/' + slug
+                    };
+
+                    console.log("Created slug <" + slug + "> with as url <" + req.body.url + ">");
+
+                    res.status(responseObject.Status).json(responseObject);
+                });
+            }
+        });
+    } catch (err) {
+        next(err);
+    }
+});
 
 // Open Slug
 // optional add ([\\w]{' + slugLength + '})
-app.get('/:slug', function(req, res) {
-    connection.query('SELECT `url` FROM `shorts` WHERE `slug` = \'' + req.params.slug + '\'', function (err, rows, fields) {
-        if (err) {
-            throw err
-        }
-
-        if (rows.length === 1) {
-            res.redirect(rows[0].url);
-        } else {
-            res.redirect('/error');
-        }
-    });
+app.get('/:slug', function(req, res, next) {
+    try {
+        connection.query('SELECT `url` FROM `shorts` WHERE `slug` = \'' + req.params.slug + '\'', function (err, rows, fields) {
+            if (err) { next(err) } else {
+                if (rows.length === 1) {
+                    res.redirect(rows[0].url);
+                } else {
+                    throw Error('De gebruikte URL is niet langer beschikbaar.');
+                }
+            }
+        });
+    } catch (err) {
+        next(err);
+    }
 });
 
 app.get('/img/:image', function (req, res) {
     res.sendFile(path.join(__dirname + '/img/' + req.params.image));
-})
+});
+
+// Error Handling
+app.use(middlewares.notFound);
+app.use(middlewares.errorHandler);
 
 // Start Web App
 app.listen(port, () => console.log(`App running on http://localhost:${port}`));
