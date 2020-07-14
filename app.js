@@ -64,8 +64,8 @@ app.post('/api/new', function (req, res, next) {
 
                 res.status(responseObject.Status).json(responseObject);
             } else {
+                let slug = makeSlug();
                 connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + req.body.url + '\')', function (err, rows, fields) {
-                    let slug = makeSlug();
                     responseObject.Response = {
                         newUrl: 'https://' + req.hostname + '/' + slug
                     };
