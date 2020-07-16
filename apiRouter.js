@@ -17,7 +17,6 @@ router.post('/new', function (req, res, next) {
             'Version': 1.0
         };
 
-        throw Error('Testing');
         connection.query('SELECT `slug`, `url` FROM `shorts` WHERE `url` = \'' + req.body.url + '\'', function (err, rows, fields) {
             if (err) { next(err) } else {
                 if (rows && rows.length >= 1) {
