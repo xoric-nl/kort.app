@@ -55,7 +55,7 @@ app.post('/api/new', function (req, res, next) {
         };
 
         connection.query('SELECT `slug`, `url` FROM `shorts` WHERE `url` = \'' + req.body.url + '\'', function (err, rows, fields) {
-            if (rows.length >= 1) {
+            if (rows && rows.length >= 1) {
                 responseObject.Response = {
                     newUrl: 'https://' + req.hostname + '/' + rows[0]['slug']
                 };
@@ -79,6 +79,11 @@ app.post('/api/new', function (req, res, next) {
     } catch (err) {
         next(err);
     }
+});
+
+// Robots txt
+app.get('/robots.txt', function (req, res) {
+    res.sendFile(path.join(__dirname + '/robots.txt'));
 });
 
 // Open Slug

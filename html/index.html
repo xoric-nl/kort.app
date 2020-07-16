@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Home &middot; kort.app</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Description" content="Kort.App - Lekker kort!">
     <link rel="icon" type="image/png" href="img/favicon.png"/>
 
     <!-- UIkit CSS -->
@@ -34,20 +35,24 @@
         #smallText {
             font-size: 40px;
         }
+
+        .uk-button {
+            font-size: 14pt;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <div class="uk-container uk-text-muted">
+    <main class="uk-container uk-text-muted">
         <div class="uk-text-center uk-text-success uk-margin-large-top">
-<!--            <h1 class="uk-text-success">Kort.App</h1>-->
-            <img src="img/logo.png" width="60%" />
+            <img src="img/logo.png" width="60%" alt="Kort.App"/>
             <p class="uk-text-large" id="smallText">Lekker kort!</p>
         </div>
         <div class="uk-form-stacked uk-margin-large-top" id="inputForm">
             <div class="uk-margin uk-text-danger uk-hidden" id="errorMessage">
             </div>
             <div class="uk-margin">
-                <label class="uk-form-label" style="color: #ddd;">URL Om te verkleinen</label>
+                <label class="uk-form-label" style="color: #ddd;" for="urlToShorten">URL Om te verkleinen</label>
                 <input type="text" class="uk-input" placeholder="https://example.com" id="urlToShorten">
             </div>
             <div class="uk-margin uk-text-center">
@@ -55,15 +60,15 @@
             </div>
         </div>
         <div id="successNotification" class="uk-hidden uk-text-center uk-margin-large-top">
-            <p style="color: #ccc; font-size: 20px;" class="uk-margin-medium-bottom">
+            <label style="color: #ccc; font-size: 20px;" class="uk-margin-medium-bottom" for="newUrl">
                 Je nieuwe url is
-            </p>
+            </label>
             <input type="text" style="font-size: 30px;" id="newUrl" class="uk-input uk-form-blank uk-text-center" readonly />
             <button class="uk-button uk-button-small uk-button-primary uk-margin-medium-top" onclick="copyNewUrl()">Kopieer</button>
             <br/>
             <a class="uk-button uk-button-small uk-button-link uk-margin-medium-top" href="/">Terug</a>
         </div>
-    </div>
+    </main>
 
     <script>
         function copyNewUrl() {
