@@ -1,3 +1,7 @@
+// Read and configure .env
+const dotenv = require("dotenv");
+dotenv.config();
+
 // Require Express
 const express = require('express');
 const app = express();
@@ -11,14 +15,14 @@ const path = require('path');
 // MySQL Client Require
 const mysql = require('mysql')
 const connection = mysql.createConnection({
-    host: process.env.HOST || 'localhost',
-    user: process.env.USERNAME || 'admin_kort',
-    password: process.env.PASSWORD || (process.env.PASSWORD === '' ? '' : '8ir?R20l'),
-    database: process.env.DATABASE || 'admin_kort-app'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 // Web App Settings
-const port =  process.env.PORT || 3000;
+const port =  process.env.PORT || 8000;
 const slugLength =  process.env.SLUGLENGTH || 6;
 
 // Function to generate random slug
@@ -55,25 +59,29 @@ app.post('/api/new', function (req, res, next) {
         };
 
         connection.query('SELECT `slug`, `url` FROM `shorts` WHERE `url` = \'' + req.body.url + '\'', function (err, rows, fields) {
-            if (rows && rows.length >= 1) {
-                responseObject.Response = {
-                    newUrl: 'https://' + req.hostname + '/' + rows[0]['slug']
-                };
-
-                console.log("Returned existing slug <" + rows[0]['slug'] + "> with as url <" + req.body.url + ">");
-
-                res.status(responseObject.Status).json(responseObject);
-            } else {
-                let slug = makeSlug();
-                connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + req.body.url + '\')', function (err, rows, fields) {
+            if (err) { next(err) } else {
+                if (rows && rows.length >= 1) {
                     responseObject.Response = {
-                        newUrl: 'https://' + req.hostname + '/' + slug
+                        newUrl: 'https://' + req.hostname + '/' + rows[0]['slug']
                     };
 
-                    console.log("Created slug <" + slug + "> with as url <" + req.body.url + ">");
+                    console.log("Returned existing slug <" + rows[0]['slug'] + "> with as url <" + req.body.url + ">");
 
                     res.status(responseObject.Status).json(responseObject);
-                });
+                } else {
+                    let slug = makeSlug();
+                    connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + req.body.url + '\')', function (err, rows, fields) {
+                        if (err) { next(err) } else {
+                            responseObject.Response = {
+                                newUrl: 'https://' + req.hostname + '/' + slug
+                            };
+
+                            console.log("Created slug <" + slug + "> with as url <" + req.body.url + ">");
+
+                            res.status(responseObject.Status).json(responseObject);
+                        }
+                    });
+                }
             }
         });
     } catch (err) {

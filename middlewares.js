@@ -9,9 +9,9 @@ function errorHandler(err, req, res, next) {
     const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
     res.status(statusCode);
     res.json({
-      message: err.message,
-      stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-      response: err.response ? err.response.data : null,
+      Message: err.message,
+      Stack: process.env.NODE_ENV === 'production' ? null : err.stack,
+      Response: err.response ? err.response.data : null,
     });
   } else {
     res.redirect(`/error?message=${encodeURIComponent(err.message)}`);
