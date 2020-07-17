@@ -14,7 +14,7 @@ function errorHandler(err, req, res, next) {
       Response: err.response ? err.response.data : null,
     });
   } else {
-    res.redirect(`/error?message=${encodeURIComponent(err.message)}`);
+    res.redirect(`/?message=${encodeURIComponent(err.message)}`);
   }
 
   console.error(err.stack);

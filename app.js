@@ -48,11 +48,6 @@ app.get('/', function (req, res, next) {
     res.status(200).sendFile(path.join(__dirname + '/html/index.html'));
 });
 
-// Error Route
-app.get('/error', function (req, res, next) {
-    res.status(200).sendFile(path.join(__dirname + '/html/index.html'));
-});
-
 // Static Files Route
 app.use('/static', staticRouter);
 app.use('/api', apiRouter);

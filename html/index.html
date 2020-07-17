@@ -129,13 +129,11 @@
             }
         }
 
-        if (window.location.pathname === '/error') {
-            new function () {
-                const urlParams = new URLSearchParams(window.location.search);
-                const message = urlParams.get('message');
-                $("#errorMessage").text(message);
-                $("#errorMessage").removeClass("uk-hidden");
-            }
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        if (message) {
+            $("#errorMessage").text(message);
+            $("#errorMessage").removeClass("uk-hidden");
         }
     </script>
 </body>
