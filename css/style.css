@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+html {
+    background: #dddddd url("/static/img/background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+body {
+    background: transparent;
+}
+
+main {
+    height: 100vh;
+}
+
+.backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    text-align: center;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.backdrop form,
+.backdrop label {
+    color: white;
+}
+
+input[type='text'] {
+    color: #696969 !important;
+    box-shadow: none !important;
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+img {
+    margin-bottom: 25px;
+}
+
+@media screen and (min-width: 40em) {
+    .backdrop {
+        width: 50% !important;
+    }
+}
+
+.button {
+    background-color: #16A044;
+    font-size: 14pt !important;
+    font-weight: bold;
+}
+.button:hover,
+.button:focus {
+    background-color: #1FA19B;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+a, a:focus, a:active, a:visited, a:hover {
+    color: #1FA19B;
+}
+
+.hidden {
+    display: none;
+}
+
+#newUrl {
+    font-family: 'Roboto Mono', monospace;
+}
+
+/*
+    Loader
+*/
+.lds-ripple {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-ripple div {
+    position: absolute;
+    border: 4px solid #16A044;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+    0% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        top: 0px;
+        left: 0px;
+        width: 72px;
+        height: 72px;
+        opacity: 0;
+    }
+}
