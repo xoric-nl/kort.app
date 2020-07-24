@@ -66,7 +66,7 @@ app.get('/:slug', function(req, res, next) {
                 if (rows.length === 1) {
                     res.redirect(rows[0].url);
                 } else {
-                    next(Error('De gebruikte URL is niet langer beschikbaar.'));
+                    next(Error('De gebruikte URL is niet langer beschikbaar. 😒'));
                 }
             }
         });

@@ -30,10 +30,10 @@ function submit() {
                 }
             ),
             success: function(data) {
-                alertify.success('De url is verkleind :)');
+                alertify.success('De url is verkleind 😊');
                 $('#inputForm').addClass("hidden");
                 $('#successNotification').removeClass("hidden");
-                $("#smallText").html('Nice, je URL is nu lekker kort :D');
+                $("#smallText").html('Nice, je URL is nu lekker kort 😁');
 
                 $("#newUrl").val(data.Response.newUrl);
                 $('#loader').addClass("hidden");
@@ -48,9 +48,9 @@ function submit() {
         });
     } else {
         if ($('#urlToShorten').val()) {
-            alertify.warning('De waarde moet een url zijn! :)');
+            alertify.warning('De waarde moet een url zijn! 😒');
         } else {
-            alertify.warning('De url mag niet leeg zijn :(');
+            alertify.warning('De url mag niet leeg zijn 😒');
         }
         $('#inputForm').removeClass("hidden");
         $('#successNotification').addClass("hidden");
