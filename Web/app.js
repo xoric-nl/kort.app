@@ -27,7 +27,6 @@ const apiRouter    = require('./apiRouter');
 
 // Web App Settings
 const port =  process.env.PORT || 8000;
-const slugLength =  process.env.SLUGLENGTH || 6;
 
 // Initiate Web App
 app.use(express.json()); // for parsing application/json

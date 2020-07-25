@@ -1,3 +1,4 @@
+const slugLength =  process.env.SLUGLENGTH || 6;
 // Function to generate random slug
 function makeSlug(length = slugLength) {
     var result           = '';
