@@ -35,66 +35,68 @@
 <body>
     <main class="grid-container">
         <div class="grid-x align-center align-middle" style="height: 100%">
-            <div class="shrink backdrop">
+            <div class="shrink custom-container">
                 <img src="/static/img/logo.png" width="70%" alt="Kort.App"/>
-                <div class="grid-container" id="inputForm">
-                    <div class="grid-x grid-padding-x">
-                        <div class="cell">
-                            <label class="text-left" for="urlToShorten">URL Om te verkleinen
-                                <div class="input-group">
-                                    <input class="input-group-field" type="text" id="urlToShorten" placeholder="https://example.com">
-                                    <div class="input-group-button">
-                                        <button class="button" onclick="submit();">Verklein</button>
+                <div class="darkBackground">
+                    <div class="grid-container" id="inputForm">
+                        <div class="grid-x grid-padding-x">
+                            <div class="cell">
+                                <label class="text-left" for="urlToShorten">URL Om te verkleinen
+                                    <div class="input-group">
+                                        <input class="input-group-field" type="text" id="urlToShorten" placeholder="https://example.com">
+                                        <div class="input-group-button">
+                                            <button class="button" onclick="submit();">Verklein</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </label>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="grid-container hidden" id="successNotification">
-                    <div class="grid-x grid-padding-x">
-                        <div class="cell">
-                            <label class="text-left" for="newUrl">Je nieuwe url is
-                                <div class="input-group">
-                                    <input class="input-group-field" type="text" id="newUrl" readonly>
-                                    <div class="input-group-button">
-                                        <button class="button" onclick="copyNewUrl();">Kopieer</button>
+                    <div class="grid-container hidden" id="successNotification">
+                        <div class="grid-x grid-padding-x">
+                            <div class="cell">
+                                <label class="text-left" for="newUrl">Je nieuwe url is
+                                    <div class="input-group">
+                                        <input class="input-group-field" type="text" id="newUrl" readonly>
+                                        <div class="input-group-button">
+                                            <button class="button" onclick="copyNewUrl();">Kopieer</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="cell text-center">
-                            <a onclick="location.reload();">Terug</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-container text-left" style="font-size: 10pt;">
-                    <div class="grid-x">
-                        <div class="cell small-10">
-                            <a onclick="$('#disclaimer').toggleClass('hidden');">Disclaimer</a>
-                        </div>
-                        <div class="cell small-2 text-right" style="color: #bbb;">
-                            v1.1
+                                </label>
+                            </div>
+                            <div class="cell text-center">
+                                <a onclick="location.reload();">Terug</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="grid-container text-left hidden" style="font-size: 10pt; padding-top: 5px; color: #eee;" id="disclaimer">
-                    De standaard afgekorte URL's zijn een periode van 1 jaar geldig.
-                    Na verloop van een jaar wordt de URL automatisch en permanent verwijderd.
-                    Uw gegevens zoals bijv het ip adres wordt nooit door Kort.App opgeslagen.
-                    <br/>
-                    <br/>
-                    Kort.App neemt geen verantwoordelijkheid voor het volgende:
-                    <ul style="margin-bottom: 0;">
-                        <li>Het verdwijnen van URL's ook als ze nog houdbaar zijn.</li>
-                        <li>De inhoud van de doorverwezen pagina's.</li>
-                        <li>De bereikbaarheid/uptime van de doorverwezen pagina's.</li>
-                    </ul>
-                </div>
-                <div class="hidden" id="loader">
-                    <div class="lds-ripple">
-                        <div></div>
-                        <div></div>
+                    <div class="grid-container text-left" style="font-size: 10pt;">
+                        <div class="grid-x">
+                            <div class="cell small-10">
+                                <a onclick="$('#disclaimer').toggleClass('hidden');">Disclaimer</a>
+                            </div>
+                            <div class="cell small-2 text-right" style="color: #bbb;">
+                                v1.1
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-container text-left hidden" style="font-size: 10pt; padding-top: 5px; color: #eee;" id="disclaimer">
+                        De standaard afgekorte URL's zijn een periode van 1 jaar geldig.
+                        Na verloop van een jaar wordt de URL automatisch en permanent verwijderd.
+                        Uw gegevens zoals bijv het ip adres wordt nooit door Kort.App opgeslagen.
+                        <br/>
+                        <br/>
+                        Kort.App neemt geen verantwoordelijkheid voor het volgende:
+                        <ul style="margin-bottom: 0;">
+                            <li>Het verdwijnen van URL's ook als ze nog houdbaar zijn.</li>
+                            <li>De inhoud van de doorverwezen pagina's.</li>
+                            <li>De bereikbaarheid/uptime van de doorverwezen pagina's.</li>
+                        </ul>
+                    </div>
+                    <div class="hidden" id="loader">
+                        <div class="lds-ripple">
+                            <div></div>
+                            <div></div>
+                        </div>
                     </div>
                 </div>
             </div>
