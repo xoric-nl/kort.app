@@ -39,8 +39,7 @@ function submit() {
                 $('#loader').addClass("hidden");
             },
             error: function(data) {
-                alertify.error('data.responseJSON.Message');
-                UIkit.notification(data.responseJSON.Message, {pos: "bottom-left", status: 'danger'});
+                alertify.error(data.responseJSON.Message);
                 $('#loader').addClass("hidden");
             },
             contentType: "application/json",
