@@ -29,17 +29,6 @@ const apiRouter    = require('./apiRouter');
 const port =  process.env.PORT || 8000;
 const slugLength =  process.env.SLUGLENGTH || 6;
 
-// Function to generate random slug
-function makeSlug(length = slugLength) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
-
 // Initiate Web App
 app.use(express.json()); // for parsing application/json
 

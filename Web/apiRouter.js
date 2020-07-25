@@ -1,3 +1,14 @@
+// Function to generate random slug
+function makeSlug(length = slugLength) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
 const express = require('express'),
     mysql = require('mysql'),
     connection = mysql.createConnection({
