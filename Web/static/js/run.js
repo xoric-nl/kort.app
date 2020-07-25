@@ -58,10 +58,19 @@ function submit() {
     }
 }
 
+function goBack() {
+    window.location.href = window.location.href.split('?')[0];
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 const message = urlParams.get('message');
+const url = urlParams.get('url');
 if (message) {
     alertify.error(message);
+}
+if (url) {
+    $('#urlToShorten').val(atob(url));
+    submit();
 }
 
 alertify.set('notifier','position', 'top-center');
