@@ -1,7 +1,7 @@
 {
   "name": "Kort.App",
   "short_name": "Kort.App",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "Maak de huidige url lekker kort.",
   "permissions": ["tabs"],
   "icons": {
