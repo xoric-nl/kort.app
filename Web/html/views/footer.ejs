@@ -1,0 +1,11 @@
+<%- include('loader'); -%>
+<div class="grid-container text-left footer">
+    <div class="grid-x">
+        <div class="cell small-10">
+            <a ng-click="View.setView('disclaimer');" ng-class="{active: View.getCurrent() == 'disclaimer'}" ng-if="View.getCurrent() != ''">Disclaimer</a>
+        </div>
+        <div class="cell small-2 text-right" style="color: #bbb;" title="Web Versie: <%= Version.Web %>&#010;API Versie: <%= Version.API %>">
+            v<%= Version.Web %>
+        </div>
+    </div>
+</div>

@@ -2,43 +2,74 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+const Version = {
+    Web: '2.0',
+    API: '1.2'
+};
+
+// App Config Object
+const Config = {
+    Database: {
+        Host: process.env.DB_HOST,
+        Username: process.env.DB_USERNAME,
+        Password: process.env.DB_PASSWORD,
+        Name: process.env.DB_NAME
+    },
+    WebApp: {
+        Port: process.env.PORT || 8000,
+        SlugLength: process.env.SLUGLENGTH || 6
+    },
+    Versions: Version
+};
+
 // Require Express
 const express = require('express');
 const app = express();
 
 // Require Middlewares
-const middlewares = require('./middlewares');
+const Middlewares = require('./middlewares').Middlewares(Config);
 
 // Require Path
 const path = require('path');
 
 // MySQL Client Require
-const mysql = require('mysql')
-const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+const Mysql = require('mysql')
+const DatabaseConnection = Mysql.createConnection({
+    host: Config.Database.Host,
+    user: Config.Database.Username,
+    password: Config.Database.Password,
+    database: Config.Database.Name
 });
 
-// Route Controller's
-const staticRouter = require('./staticRouter');
-const apiRouter    = require('./apiRouter');
+// Functions
+// makeSlug to generate random slug
+function makeSlug(length = Config.WebApp.SlugLength) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 
-// Web App Settings
-const port =  process.env.PORT || 8000;
+// Route Controller's
+const staticRouter = require('./staticRouter').StaticRouter(Config);
+const apiRouter    = require('./apiRouter').apiRouter(Config, makeSlug);
 
 // Initiate Web App
 app.use(express.json()); // for parsing application/json
 
 // Default Route
 app.get('/', function (req, res, next) {
-    res.status(200).sendFile(path.join(__dirname + '/html/index.html'));
+    res.status(200).render(path.join(__dirname + '/html/index.ejs'), {
+        Version: Config.Versions
+    });
 });
 
 // Static Files Route
-app.use('/static', staticRouter);
-app.use('/api', apiRouter);
+app.use('/static', staticRouter.Routes());
+app.use('/api', apiRouter.Routes(DatabaseConnection));
 
 // Robots txt
 app.get('/robots.txt', function (req, res) {
@@ -49,7 +80,7 @@ app.get('/robots.txt', function (req, res) {
 // optional add ([\\w]{' + slugLength + '})
 app.get('/:slug', function(req, res, next) {
     try {
-        connection.query('SELECT `url` FROM `shorts` WHERE `slug` = \'' + req.params.slug + '\'', function (err, rows, fields) {
+        DatabaseConnection.query('SELECT `url` FROM `shorts` WHERE `slug` = \'' + req.params.slug + '\'', function (err, rows, fields) {
             if (err) { next(err) } else {
                 if (rows.length === 1) {
                     res.redirect(rows[0].url);
@@ -64,8 +95,8 @@ app.get('/:slug', function(req, res, next) {
 });
 
 // Error Handling
-app.use(middlewares.notFound);
-app.use(middlewares.errorHandler);
+app.use(Middlewares.notFound);
+app.use(Middlewares.errorHandler);
 
 // Start Web App
-app.listen(port, () => console.log(`App running on http://localhost:${port}`));
+app.listen(Config.WebApp.Port, () => console.log(`App running on http://localhost:${Config.WebApp.Port}`));

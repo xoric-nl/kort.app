@@ -1,27 +1,31 @@
-function notFound(req, res, next) {
-  res.status(404);
-  const error = new Error(`Not Found - ${req.originalUrl}`);
-  next(error);
-}
+exports.Middlewares = function (Config) {
+  let responseObject = {
+    "Status": 200,
+    "Message": 'Ok',
+    'Version': Config.Versions.API
+  };
 
-function errorHandler(err, req, res, next) {
-  if (req.originalUrl.includes('api')) {
-    const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
-    res.status(statusCode);
-    res.json({
-      Message: err.message,
-      Stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-      Response: err.response ? err.response.data : null,
-    });
-  } else {
-    res.redirect(`/?message=${encodeURIComponent(err.message)}`);
-  }
+  return {
+    notFound: function (req, res, next) {
+      res.status(404);
+      const error = new Error(`Not Found - ${req.originalUrl}`);
+      next(error);
+    },
+    errorHandler: function (err, req, res, next) {
+      if (req.originalUrl.includes('api')) {
+        responseObject.Status = res.statusCode !== 200 ? res.statusCode : 500;
+        responseObject.Message  = err.message;
+        responseObject.Response = err.response ? err.response.data : null;
+        if (process.env.NODE_ENV != 'production') {
+          responseObject.Stack = err.stack;
+        }
 
-  console.error(err.stack);
-  
-}
+        res.status(responseObject.Status).json(responseObject);
+      } else {
+        res.redirect(`/?message=${encodeURIComponent(err.message)}`);
+      }
 
-module.exports = {
-  notFound,
-  errorHandler
+      console.error(err.stack);
+    }
+  };
 };

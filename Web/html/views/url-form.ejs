@@ -1,0 +1,20 @@
+<div class="grid-container" ng-if="View.getCurrent() == 'inputview'" ng-controller="inputViewController">
+    <div class="grid-x grid-padding-x">
+        <form class="cell hide-for-medium" ng-submit="submit();">
+            <label class="text-left">
+                URL Om te verkleinen
+                <input class="input-group-field" type="url" placeholder="https://example.com" ng-model="form.url.value" required empty-to-null/>
+            </label>
+            <input type="submit" class="button mobile-submit-button" value="Verklein" name="submit" />
+        </form>
+        <form class="cell show-for-medium" ng-submit="submit();">
+            <label class="text-left">URL Om te verkleinen</label>
+            <div class="input-group">
+                <input class="input-group-field" type="url" placeholder="https://example.com" ng-model="form.url.value" required empty-to-null/>
+                <div class="input-group-button">
+                    <input type="submit" class="button" value="Verklein" name="submit" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

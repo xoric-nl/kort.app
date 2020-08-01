@@ -1,63 +1,54 @@
-const slugLength =  process.env.SLUGLENGTH || 6;
-// Function to generate random slug
-function makeSlug(length = slugLength) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
+exports.apiRouter = function (Config, makeSlug) {
+    const Router = require('express').Router();
 
-const express = require('express'),
-    mysql = require('mysql'),
-    connection = mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME
-    }),
-    router  = express.Router();
-
-// New API Route
-router.post('/new', function (req, res, next) {
-    try {
-        let responseObject = {
-            "Status": 200,
-            "Message": 'Ok',
-            'Version': 1.0
-        };
-
-        connection.query('SELECT `slug`, `url` FROM `shorts` WHERE `url` = \'' + req.body.url + '\'', function (err, rows, fields) {
-            if (err) { next(err) } else {
-                if (rows && rows.length >= 1) {
-                    responseObject.Response = {
-                        newUrl: 'https://' + req.hostname + '/' + rows[0]['slug']
-                    };
-
-                    console.log("Returned existing slug <" + rows[0]['slug'] + "> with as url <" + req.body.url + ">");
-
-                    res.status(responseObject.Status).json(responseObject);
-                } else {
-                    let slug = makeSlug();
-                    connection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + req.body.url + '\')', function (err, rows, fields) {
-                        if (err) { next(err) } else {
-                            responseObject.Response = {
-                                newUrl: 'https://' + req.hostname + '/' + slug
+    return {
+        Routes: function (DatabaseConnection) {
+            return [
+                // New API Route
+                Router.post('/new', function (req, res, next) {
+                    try {
+                        if (req.body.url) {
+                            let responseObject = {
+                                "Status": 200,
+                                "Message": 'De url is verkleind. 😁',
+                                'Version': Config.Versions.API
                             };
 
-                            console.log("Created slug <" + slug + "> with as url <" + req.body.url + ">");
+                            DatabaseConnection.query('SELECT `slug`, `url` FROM `shorts` WHERE `url` = \'' + req.body.url + '\'', function (err, rows, fields) {
+                                if (err) { next(err) } else {
+                                    if (rows && rows.length >= 1) {
+                                        responseObject.Response = {
+                                            newUrl: 'https://' + req.hostname + '/' + rows[0]['slug']
+                                        };
 
-                            res.status(responseObject.Status).json(responseObject);
+                                        console.log("Returned existing slug <" + rows[0]['slug'] + "> with as url <" + req.body.url + ">");
+
+                                        res.status(responseObject.Status).json(responseObject);
+                                    } else {
+                                        let slug = makeSlug();
+                                        DatabaseConnection.query('INSERT INTO `shorts`(`slug`, `url`) VALUES (\''+ slug + '\', \'' + req.body.url + '\')', function (err, rows, fields) {
+                                            if (err) { next(err) } else {
+                                                responseObject.Response = {
+                                                    newUrl: 'https://' + req.hostname + '/' + slug
+                                                };
+
+                                                console.log("Created slug <" + slug + "> with as url <" + req.body.url + ">");
+
+                                                res.status(responseObject.Status).json(responseObject);
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        } else {
+                            console.log(req.body);
+                            throw new Error('URL is een verplicht veld.');
                         }
-                    });
-                }
-            }
-        });
-    } catch (err) {
-        next(err);
-    }
-});
-
-module.exports = router;
+                    } catch (err) {
+                        next(err);
+                    }
+                })
+            ]
+        }
+    };
+};

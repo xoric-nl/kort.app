@@ -17,12 +17,12 @@ main {
 
 .custom-container {
     text-align: center;
-    color: white;
+    color: #eeeeee;
 }
 
 .custom-container form,
 .custom-container label {
-    color: white;
+    color: #eeeeee;
 }
 
 .custom-container > .darkBackground {
@@ -35,7 +35,8 @@ main {
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-input[type='text'] {
+input[type='text'],
+input[type='url'] {
     color: #696969 !important;
     box-shadow: none !important;
 }
@@ -64,11 +65,17 @@ img {
     background-color: #1FA19B;
 }
 
-a:hover {
+a:hover, a.active {
     text-decoration: underline;
 }
-a, a:focus, a:active, a:visited, a:hover {
+a {
     color: #1FA19B;
+}
+a:focus, a:active, a:visited, a:hover, a.active {
+    color: #52D4CE;
+}
+a.active {
+    cursor: default;
 }
 
 .hidden {
@@ -79,14 +86,118 @@ a, a:focus, a:active, a:visited, a:hover {
     font-family: 'Roboto Mono', monospace;
 }
 
+.view-title {
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.view-title h4 {
+    margin: 0;
+}
+
+.view-title .back {
+    top: -0.8rem;
+    right: -0.5rem;
+    position: absolute;
+    font-size: 1.2rem;
+}
+
+.view-title.just-back {
+    border: 0;
+    margin: 0;
+}
+
+.input-group {
+    margin: 0;
+}
+
+.input-group-link {
+    font-size: 10pt;
+}
+
+.input-group-link .svg-inline--fa {
+    margin-right: 0.4rem;
+}
+
+.footer {
+    font-size: 10pt;
+    margin-top: 1rem;
+}
+
 /*
-    Loader
-*/
+ * Cookie bar
+ */
+.cookie-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    color: #eeeeee;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0;
+    margin: 0;
+    min-height: 70px;
+    line-height: 70px;
+    font-size: 13.2pt;
+
+    /* Shadow */
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.mobile-submit-button {
+    width: 100%;
+    height: 2.4375rem;
+    font-size: 1rem;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Small only */
+@media screen and (max-width: 39.9375em) {
+    .cookie-bar {
+        line-height: normal;
+        text-align: center;
+    }
+
+    .cookie-bar .cell {
+        padding: 15px;
+    }
+
+    .cookie-bar .text-right {
+        text-align: center;
+    }
+}
+
+/* Medium and up */
+@media screen and (min-width: 40em) {}
+
+/* Medium only */
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {}
+
+/* Large and up */
+@media screen and (min-width: 64em) {}
+
+/* Large only */
+@media screen and (min-width: 64em) and (max-width: 74.9375em) {}
+
+.cookie-bar .button {
+    font-size: inherit !important;
+    font-weight: inherit;
+    padding: 10px 15px;
+    margin: 0;
+}
+
+/*
+ * Loader
+ */
 .lds-ripple {
     display: inline-block;
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 72px;
+    height: 72px;
 }
 .lds-ripple div {
     position: absolute;
