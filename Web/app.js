@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const Version = {
-    Web: '2.5',
+    Web: '2.6',
     API: '1.3'
 };
 
