@@ -70,14 +70,24 @@ angular.module('kortApp', ['ngCookies', 'ng-clipboard'])
     }
 })
 .controller('inputViewController', function ($rootScope, $scope, $http, $location) {
-    $scope.form = {};
+    $scope.form = {
+        url: {
+            value: ($location.search().url ? encodeURI(Base64.decode($location.search().url)) : null)
+        },
+        slug: {
+            value: null
+        },
+        mail: {
+            value: null
+        }
+    };
     $location.search('url', null);
     $scope.customSlug = false;
 
     $scope.resetForm = function () {
         $scope.form = {
             url: {
-                value: ($location.search().url ? Base64.decode($location.search().url) : null)
+                value: null
             },
             slug: {
                 value: null
@@ -87,7 +97,6 @@ angular.module('kortApp', ['ngCookies', 'ng-clipboard'])
             }
         };
     };
-    $scope.resetForm();
 
     $scope.submit = function () {
         $scope.loader(true);
