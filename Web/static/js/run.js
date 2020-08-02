@@ -70,23 +70,44 @@ angular.module('kortApp', ['ngCookies', 'ng-clipboard'])
     }
 })
 .controller('inputViewController', function ($rootScope, $scope, $http, $location) {
-    $scope.form = {
-        url: {
-            value: ($location.search().url ? Base64.decode($location.search().url) : null),
-            state: ''
-        }
-    };
+    $scope.form = {};
     $location.search('url', null);
+    $scope.customSlug = false;
+
+    $scope.resetForm = function () {
+        $scope.form = {
+            url: {
+                value: ($location.search().url ? Base64.decode($location.search().url) : null)
+            },
+            slug: {
+                value: null
+            },
+            mail: {
+                value: null
+            }
+        };
+    };
+    $scope.resetForm();
 
     $scope.submit = function () {
         $scope.loader(true);
-        $http.post(location.origin + '/api/new', {
+        let request = {
             url: $scope.form.url.value
-        })
+        };
+
+        if ($scope.form.slug.value) {
+            request.slug = $scope.form.slug.value;
+        }
+        if ($scope.form.mail.value) {
+            request.mail = $scope.form.mail.value;
+        }
+
+        $http.post(location.origin + '/api/new', request)
         .then(({data: response}) => {
             $rootScope.shortUrl = response.Response.newUrl;
             $scope.View.setView('ShortUrlView');
             alertify.success(response.Message);
+            $scope.resetForm();
         })
         .catch(({data: response}) => {
             if (response.Status >= 500) {
@@ -100,6 +121,9 @@ angular.module('kortApp', ['ngCookies', 'ng-clipboard'])
         });
     };
 
+    $scope.toggleCustomSlug = function () {
+        $scope.customSlug = !$scope.customSlug;
+    };
     if ($scope.form.url.value != null) {
         $scope.submit();
     }

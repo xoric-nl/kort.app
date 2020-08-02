@@ -3,8 +3,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const Version = {
-    Web: '2.0',
-    API: '1.2'
+    Web: '2.5',
+    API: '1.3'
 };
 
 // App Config Object
@@ -17,7 +17,8 @@ const Config = {
     },
     WebApp: {
         Port: process.env.PORT || 8000,
-        SlugLength: process.env.SLUGLENGTH || 6
+        SlugLength: process.env.SLUGLENGTH || 6,
+        MaxSlugLength: process.env.MAX_LENGTH || 32
     },
     Versions: Version
 };
@@ -63,7 +64,8 @@ app.use(express.json()); // for parsing application/json
 // Default Route
 app.get('/', function (req, res, next) {
     res.status(200).render(path.join(__dirname + '/html/index.ejs'), {
-        Version: Config.Versions
+        Version: Config.Versions,
+        WebApp: Config.WebApp
     });
 });
 

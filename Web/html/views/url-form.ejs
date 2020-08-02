@@ -1,20 +1,28 @@
-<div class="grid-container" ng-if="View.getCurrent() == 'inputview'" ng-controller="inputViewController">
+<div class="grid-container" ng-show="View.getCurrent() == 'inputview'" ng-controller="inputViewController">
     <div class="grid-x grid-padding-x">
-        <form class="cell hide-for-medium" ng-submit="submit();">
-            <label class="text-left">
-                URL Om te verkleinen
-                <input class="input-group-field" type="url" placeholder="https://example.com" ng-model="form.url.value" required empty-to-null/>
+        <form class="cell hide-for-medium text-left" ng-submit="submit();">
+            <label>
+                <label class="required">URL Om te verkleinen</label>
+                <input type="url" class="input-group-field" placeholder="https://example.com" ng-model="form.url.value" required empty-to-null/>
             </label>
+            <a class="input-group-link" ng-click="toggleCustomSlug();">
+                <i class="fas fa-cog"></i>Geavanceerd<i class="fas fa-chevron-down" ng-if="!customSlug" style="margin-left: 0.4rem;"></i><i class="fas fa-chevron-up" ng-if="customSlug" style="margin-left: 0.4rem;"></i>
+            </a>
+            <%- include('custom-slug'); -%>
             <input type="submit" class="button mobile-submit-button" value="Verklein" name="submit" />
         </form>
-        <form class="cell show-for-medium" ng-submit="submit();">
-            <label class="text-left">URL Om te verkleinen</label>
+        <form class="cell show-for-medium text-left" ng-submit="submit();">
+            <label class="required">URL Om te verkleinen</label>
             <div class="input-group">
                 <input class="input-group-field" type="url" placeholder="https://example.com" ng-model="form.url.value" required empty-to-null/>
                 <div class="input-group-button">
                     <input type="submit" class="button" value="Verklein" name="submit" />
                 </div>
             </div>
+            <a class="input-group-link" ng-click="toggleCustomSlug();">
+                <i class="fas fa-cog"></i>Geavanceerd<i class="fas fa-chevron-down" ng-if="!customSlug" style="margin-left: 0.4rem;"></i><i class="fas fa-chevron-up" ng-if="customSlug" style="margin-left: 0.4rem;"></i>
+            </a>
+            <%- include('custom-slug'); -%>
         </form>
     </div>
 </div>
