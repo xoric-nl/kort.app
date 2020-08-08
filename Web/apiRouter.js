@@ -9,7 +9,7 @@ exports.apiRouter = function (Config, makeSlug) {
     });
 
     return {
-        Routes: function (DatabaseConnection) {
+        Routes: function (DatabaseConnection, _TMP) {
             return [
                 // New API Route
                 Router.post('/new', async function (req, res, next) {
@@ -62,6 +62,15 @@ exports.apiRouter = function (Config, makeSlug) {
                     } catch (err) {
                         next(err);
                     }
+                }),
+                Router.get('/stats', async function (req, res, next) {
+                    let responseObject = {
+                        "Status": 200,
+                        "Message": 'Current system stats',
+                        'Version': Config.Versions.API,
+                        "Response": _TMP
+                    };
+                    res.status(responseObject.Status).json(responseObject);
                 })
             ];
         }

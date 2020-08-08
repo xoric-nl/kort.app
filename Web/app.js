@@ -4,7 +4,7 @@ dotenv.config();
 
 const Version = {
     Web: '2.6',
-    API: '1.3'
+    API: '1.4'
 };
 
 // App Config Object
@@ -20,7 +20,16 @@ const Config = {
         SlugLength: process.env.SLUGLENGTH || 6,
         MaxSlugLength: process.env.MAX_LENGTH || 32
     },
+    TimeZone: 'Europe/Amsterdam',
     Versions: Version
+};
+
+let _TMP = {
+    LastRemoved: {
+        timeZone: Config.TimeZone,
+        time: '',
+        amount: 0,
+    }
 };
 
 // Require Express
@@ -54,6 +63,10 @@ function makeSlug(length = Config.WebApp.SlugLength) {
     return result;
 }
 
+// Cron's
+const CronJobs = require('./CronJobs').Jobs(Config, DatabaseConnection, _TMP);
+CronJobs.RemoveOldData.start();
+
 // Route Controller's
 const staticRouter = require('./staticRouter').StaticRouter(Config);
 const apiRouter    = require('./apiRouter').apiRouter(Config, makeSlug);
@@ -71,11 +84,16 @@ app.get('/', function (req, res, next) {
 
 // Static Files Route
 app.use('/static', staticRouter.Routes());
-app.use('/api', apiRouter.Routes(DatabaseConnection));
+app.use('/api', apiRouter.Routes(DatabaseConnection, _TMP));
 
 // Robots txt
 app.get('/robots.txt', function (req, res) {
     res.sendFile(path.join(__dirname + '/static/robots.txt'));
+});
+
+// Favicon.ico
+app.get('/favicon.ico', function (req, res) {
+    res.sendFile(path.join(__dirname + '/static/img/favicon.png'));
 });
 
 // Open Slug
