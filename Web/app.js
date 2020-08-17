@@ -3,8 +3,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const Version = {
-    Web: '2.6',
-    API: '1.4'
+    Web: '2.7',
+    API: '1.5'
 };
 
 // App Config Object
@@ -20,15 +20,23 @@ const Config = {
         SlugLength: process.env.SLUGLENGTH || 6,
         MaxSlugLength: process.env.MAX_LENGTH || 32
     },
+    Cron: {
+        time: '0 */30 * * * *'
+    },
     TimeZone: 'Europe/Amsterdam',
     Versions: Version
 };
 
 let _TMP = {
-    LastRemoved: {
-        timeZone: Config.TimeZone,
+    RunInfo: {
         time: '',
+        zone: Config.TimeZone
+    },
+    LastRemoved: {
         amount: 0,
+    },
+    TotalShorted: {
+        amount: 0
     }
 };
 
@@ -38,6 +46,9 @@ const app = express();
 
 // Require Middlewares
 const Middlewares = require('./middlewares').Middlewares(Config);
+
+// Require Logger
+const Logger = require('./Logger').Logger(Config);
 
 // Require Path
 const path = require('path');
@@ -66,6 +77,7 @@ function makeSlug(length = Config.WebApp.SlugLength) {
 // Cron's
 const CronJobs = require('./CronJobs').Jobs(Config, DatabaseConnection, _TMP);
 CronJobs.RemoveOldData.start();
+CronJobs.GetShortedCount.start();
 
 // Route Controller's
 const staticRouter = require('./staticRouter').StaticRouter(Config);
@@ -78,7 +90,8 @@ app.use(express.json()); // for parsing application/json
 app.get('/', function (req, res, next) {
     res.status(200).render(path.join(__dirname + '/html/index.ejs'), {
         Version: Config.Versions,
-        WebApp: Config.WebApp
+        WebApp: Config.WebApp,
+        Stats: _TMP
     });
 });
 
@@ -119,4 +132,4 @@ app.use(Middlewares.notFound);
 app.use(Middlewares.errorHandler);
 
 // Start Web App
-app.listen(Config.WebApp.Port, () => console.log(`App running on http://localhost:${Config.WebApp.Port}`));
+app.listen(Config.WebApp.Port, () => Logger.info("web", `App running on http://localhost:${Config.WebApp.Port}`));

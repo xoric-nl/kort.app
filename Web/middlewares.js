@@ -1,4 +1,5 @@
 exports.Middlewares = function (Config) {
+  let Logger = require('./logger').Logger(Config);
   let responseObject = {
     "Status": 200,
     "Message": 'Ok',
@@ -25,7 +26,7 @@ exports.Middlewares = function (Config) {
         res.redirect(`/?message=${encodeURIComponent(err.message)}`);
       }
 
-      console.error(err.stack);
+      Logger.error('error', err.stack);
     }
   };
 };

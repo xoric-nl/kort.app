@@ -46,6 +46,7 @@
                         <%- include('views/url-form'); -%>
                         <%- include('views/short-url-view'); -%>
                         <%- include('views/disclaimer'); -%>
+                        <%- include('views/stats'); -%>
                         <%- include('views/footer'); -%>
                     </div>
                 </div>
@@ -57,7 +58,8 @@
         <script src="/static/js/run.js"></script>
         <script>
             $(document).foundation();
-            const _VERSION = {Web: '<%= Version.Web %>', API: '<%= Version.API %>'};
+            const _VERSION = JSON.parse('<%- JSON.stringify(Version) %>');
+            const _STATS = JSON.parse('<%- JSON.stringify(Stats) %>');
         </script>
     </body>
 </html>

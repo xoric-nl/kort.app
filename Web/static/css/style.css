@@ -130,6 +130,14 @@ a.active {
     margin-top: 1rem;
 }
 
+.footer a:not(:first-child) {
+    margin-left: 10px;
+}
+
+table tbody td {
+    color: #444;
+}
+
 /*
  * Cookie bar
  */

@@ -1,0 +1,36 @@
+<div class="grid-container text-left" style="font-size: 10pt;" ng-if="View.getCurrent() == 'stats'">
+    <div class="view-title">
+        <h4>Statistieken</h4>
+        <a class="back" ng-click="View.setView('InputView');"><i class="fas fa-reply"></i></a>
+    </div>
+    <div>
+        Dit zijn de publieke statistieken van kort.app
+        <br/>
+        <br/>
+        <table class="hover unstriped">
+            <thead>
+                <tr>
+                    <th>Soort</th>
+                    <th>Aantal</th>
+                </tr>
+            </thead>
+            <tbody class="text-darken">
+                <tr>
+                    <td>Verlopen</td>
+                    <td>{{ Stats.LastRemoved.amount }}</td>
+                </tr>
+                <tr>
+                    <td>Aangemaakt</td>
+                    <td>{{ Stats.TotalShorted.amount }}</td>
+                </tr>
+            </tbody>
+            <tfoot ng-show="Stats.RunInfo.time != ''">
+                <tr>
+                    <th colspan="2">
+                        <small>Informatie geupdate op {{ Stats.RunInfo.time | date:'dd-MM-yyyy \'om\' HH:mm':Stats.RunInfo.zone }}.</small>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

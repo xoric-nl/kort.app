@@ -31,6 +31,7 @@ angular.module('kortApp', ['ngCookies', 'ng-clipboard'])
             'InputView': true,
             'ShortUrlView': false,
             'Disclaimer': false,
+            'Stats': false,
         },
         setView: function(view) {
             if (view) {
@@ -52,6 +53,9 @@ angular.module('kortApp', ['ngCookies', 'ng-clipboard'])
             return (!$scope.loading ? returnValue.toLowerCase() : '');
         },
     };
+
+    $scope.Stats = _STATS;
+    $scope.Versions = _VERSION;
 
     $scope.loading = false;
     $scope.loader = function (newValue) {

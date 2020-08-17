@@ -2,6 +2,7 @@ const Joi = require('joi');
 const Router = require('express').Router();
 
 exports.apiRouter = function (Config, makeSlug) {
+    let Logger = require('./logger').Logger(Config);
     const Schema = Joi.object({
         url: Joi.string().uri().required(),
         slug: Joi.string().min((parseInt(Config.WebApp.SlugLength) + 1)).max(Config.WebApp.MaxSlugLength).pattern(/^[A-Za-z0-9._-]+$/, {'name': 'slug'}),
@@ -28,7 +29,7 @@ exports.apiRouter = function (Config, makeSlug) {
                                         newUrl: req.protocol + '://' + req.hostname + '/' + rows[0]['slug']
                                     };
 
-                                    console.log("Returned existing slug <" + rows[0]['slug'] + "> with as url <" + req.body.url + ">");
+                                    Logger.info('web', "Returned existing slug <" + rows[0]['slug'] + "> with as url <" + req.body.url + ">");
 
                                     res.status(responseObject.Status).json(responseObject);
                                 } else {
@@ -51,7 +52,7 @@ exports.apiRouter = function (Config, makeSlug) {
                                                 newUrl: 'https://' + req.hostname + '/' + slug
                                             };
 
-                                            console.log("Created slug <" + slug + "> with as url <" + req.body.url + ">");
+                                            Logger.info('web', "Created slug <" + slug + "> with as url <" + req.body.url + ">");
 
                                             res.status(responseObject.Status).json(responseObject);
                                         }
