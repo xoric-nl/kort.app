@@ -48,7 +48,7 @@ const app = express();
 const Middlewares = require('./middlewares').Middlewares(Config);
 
 // Require Logger
-const Logger = require('./Logger').Logger(Config);
+const Logger = require('./logger').Logger(Config);
 
 // Require Path
 const path = require('path');
