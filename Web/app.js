@@ -104,6 +104,16 @@ app.get('/robots.txt', function (req, res) {
     res.sendFile(path.join(__dirname + '/static/robots.txt'));
 });
 
+// WebManifest
+app.get('/manifest.webmanifest', function (req, res) {
+    res.sendFile(path.join(__dirname + '/static/manifest.webmanifest'));
+});
+
+// Serviceworker
+app.get('/serviceWorker.js', function (req, res) {
+    res.sendFile(path.join(__dirname + '/static/js/serviceWorker.js'));
+});
+
 // Favicon.ico
 app.get('/favicon.ico', function (req, res) {
     res.sendFile(path.join(__dirname + '/static/img/favicon.png'));

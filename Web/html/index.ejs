@@ -40,6 +40,11 @@
 
         <!-- Custom Style -->
         <link rel="stylesheet" href="/static/css/style.css" />
+
+        <!-- PWA (manifest) -->
+        <link rel="manifest" href="/manifest.webmanifest">
+        <link rel="apple-touch-icon" href="/static/img/icon_192.png">
+        <meta name="theme-color" content="#77b5b2"/>
     </head>
     <body>
         <%- include('views/cookie-bar'); -%>
@@ -62,5 +67,12 @@
         <script src="/static/js/ng-clipboard.js"></script>
         <script src="/static/js/run.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/serviceWorker.js', {
+                    scope: '.'
+                });
+            }
+        </script>
     </body>
 </html>
