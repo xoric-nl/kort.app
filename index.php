@@ -185,7 +185,7 @@ if ($includeConfig && $includeFunctions) {
                 </ul>
                 <p class="uk-margin-remove">
                     Klinkt onwerkelijk toch? Om u er toch van te kunnen garanderen is de source code van deze website volledig beschikbaar en zichtbaar voor iedereen.
-                    Eerst zien dan geloven? Klik dan <a href="#">hier</a>.
+                    Eerst zien dan geloven? Klik dan <a href="https://github.com/xoric-nl/kort.app">hier</a>.
                 </p>
                 <p>
                     De gegevens die de website waarnaar wordt doorverwezen zelf opslaat kunnen wij niet voorkomen. U zit simpelweg niet meer bij ons op de website. Wij zijn dan dus ook niet verantwoordelijk voor uw gegevens welke doormiddel van een doorverwijzing via Kort.App bij derden worden bewaard.
