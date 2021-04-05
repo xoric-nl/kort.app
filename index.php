@@ -31,6 +31,11 @@ if ($includeConfig && $includeFunctions) {
                     $Result["type"] = "danger";
                     $Result["title"] = "Whoops";
                     $Result["message"] = "Daar ging iets fout tijdens het opslaan van de URL. Probeer het later opnieuw.";
+                } else {
+                    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                    $url = $actual_link . $slug;
+                    $urlQR = urlencode($url);
+                    $Result["message"] .= "<br/><br/><div class='uk-text-center'><img src='https://quickchart.io/qr?text=$urlQR&size=200' alt='QR Code' /><br/><br/><a class='uk-link' href='$url'>$url</a></div>";
                 }
             }
         } else {
@@ -123,26 +128,26 @@ if ($includeConfig && $includeFunctions) {
             <?php if (isset($redirectUrl)) { ?>
                 <div class="uk-alert uk-alert-success">
                     <h3 class="uk-margin-remove">Even geduld AUB...</h3>
-                    <p class="uk-margin-remove">
+                    <div class="uk-margin-remove">
                         U wordt doorgestuurd naar <?= $redirectUrl ?>.
                         <br><br>
                         Mocht u hier langer dan 5 seconden zijn klik dan <a href="<?= $redirectUrl ?>">hier</a>!
-                    </p>
+                    </div>
                 </div>
             <?php } ?>
             <?php if ($errorMessage) { ?>
                 <div class="uk-alert uk-alert-<?= $Result['type'] ?>">
                     <h3 class="uk-margin-remove"><?= $Result['title'] ?></h3>
-                    <p class="uk-margin-remove"><?= $Result['message'] ?></p>
+                    <div class="uk-margin-remove"><?= $Result['message'] ?></div>
                 </div>
             <?php } ?>
             <div class="uk-alert uk-alert-primary">
                 <h3 class="uk-margin-remove">Ontwikkeling</h3>
-                <p class="uk-margin-remove">
+                <div class="uk-margin-remove">
                     Er wordt nog regelmatig aan de functionalliteiten van Kort.App gewerkt.
                     <br/>
                     Zo wordt het mogelijk om aangepaste SLUG's te maken, en de bestemming hiervan later weer te wijzigen.
-                </p>
+                </div>
             </div>
 
             <div class="uk-margin-large-top">
