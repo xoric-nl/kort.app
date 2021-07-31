@@ -28,17 +28,23 @@ if ($includeConfig && $includeFunctions) {
                 $Result["title"] = "Whoops";
                 $Result["message"] = "Deze URL kan toch echt niet korter. Sorry";
             } else {
-                $slug = randomString();
+                $slug = !empty($_POST['custom_slug']) ? $_POST['custom_slug'] : randomString();
                 $editToken = randomString(50);
 
-                while (existingSlug($slug)) {
+                while (existingSlug($slug) && empty($_POST['custom_slug'])) {
                     $slug = randomString();
                 }
 
                 if (!saveUrlAndSlug($slug, $url, $editToken)) {
-                    $Result["type"] = "danger";
-                    $Result["title"] = "Whoops";
-                    $Result["message"] = "Daar ging iets fout tijdens het opslaan van de URL. Probeer het later opnieuw.";
+                    if (empty($_POST['custom_slug'])) {
+                        $Result["type"] = "danger";
+                        $Result["title"] = "Whoops";
+                        $Result["message"] = "Daar ging iets fout tijdens het opslaan van de URL. Probeer het later opnieuw.";
+                    } else {
+                        $Result["type"] = "warning";
+                        $Result["title"] = "Whoops";
+                        $Result["message"] = "De aangepaste slug '$slug' is al bij ons bekend. Deze kunt u helaas niet gebruiken.";
+                    }
                 } else {
                     $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . strtok($_SERVER['REQUEST_URI'], '?');
                     $url = $actual_link . $slug;
@@ -81,7 +87,7 @@ if ($includeConfig && $includeFunctions) {
     <head>
         <title>Kort.App - Verkort anoniem en snel</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/uikit.min.css" />
+        <link rel="stylesheet" href="css/main.css" />
         <script src="js/uikit.min.js"></script>
         <script src="js/uikit-icons.min.js"></script>
         <?php if (isset($redirectUrl)) { ?>
@@ -123,10 +129,28 @@ if ($includeConfig && $includeFunctions) {
                     <h3 style="color: white; margin-bottom: 10px; text-align: center">Voer de URL in die verkleind moet worden.</h3>
                     <div class="uk-grid uk-grid-collapse" uk-grid="">
                         <div class="uk-width-expand@m">
-                            <input type="text" class="uk-input" placeholder="https://kort.app" name="shortUrl" id="shortUrl" value="<?= isset($Result['url']) ? $Result['url'] : '' ?>">
+                            <input type="text" class="uk-input" placeholder="https://kort.app" name="shortUrl" id="shortUrl" value="<?= isset($Result['url']) ? $Result['url'] : '' ?>" />
                         </div>
                         <div class="uk-width-small@m">
                             <input type="submit" value="Verklein" class="uk-button uk-button-primary uk-width-expand">
+                        </div>
+                    </div>
+                    <div class="uk-margin-top uk-text-center uk-text-uppercase" id="customOptionsBtn" style="color: white;">
+                        <small class="uk-text-middle" style="flex: auto; color: #ccc;">
+                            <i uk-icon="cog" style="margin-right: 5px;"></i>
+                            <a style="color: #ccc; vertical-align: middle;" onclick="document.getElementById('customOptions').classList.remove('uk-hidden'); document.getElementById('customOptionsBtn').classList.add('uk-hidden');">Geavanceerde opties</a>
+                            <i uk-icon="cog" style="margin-left: 5px;"></i>
+                        </small>
+                    </div>
+                    <div class="uk-margin-small-top uk-hidden" id="customOptions">
+                        <h4 style="color: white; margin-bottom: 5px; margin-top: 0; text-align: left">Geavanceerde opties</h4>
+                        <div class="uk-grid uk-grid-small" uk-grid="">
+                            <div class="uk-width-1-2@m">
+                                <input type="text" class="uk-input" placeholder="Aangepaste verkorte url (slug)" name="custom_slug" />
+                            </div>
+<!--                            <div class="uk-width-1-2@m">-->
+<!--                                <input type="text" class="uk-input" placeholder="Aangepaste verkorte url (slug)" name="customSlug" />-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </form>
@@ -154,7 +178,7 @@ if ($includeConfig && $includeFunctions) {
                 <div class="uk-margin-remove">
                     Er wordt nog regelmatig aan de functionalliteiten van Kort.App gewerkt.
                     <br/>
-                    Zo wordt het mogelijk om aangepaste SLUG's te maken, en de bestemming hiervan later weer te wijzigen.
+                    Zo wordt het mogelijk om op een later moment de bestemming van de slug te wijzigen.
                 </div>
             </div>
 
@@ -211,7 +235,7 @@ if ($includeConfig && $includeFunctions) {
                     Kort.App is een applicatie gemaakt door <a href="https://xoric.nl/">XORIC</a>.
                 </div>
                 <div class="uk-text-right">
-                    &copy; XORIC - 2021
+                    &copy; XORIC - 2020
                     <div class="uk-margin-small-top">
                         <img src="img/logo.png" alt="XORIC - Logo" width="100px">
                     </div>
