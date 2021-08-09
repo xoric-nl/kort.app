@@ -38,7 +38,7 @@ if ($includeConfig && $includeFunctions) {
         <title>Kort.App - Verkort anoniem en snel</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php if (isset($redirectUrl)) { ?>
-<!--            <meta http-equiv="refresh" content="5;url=--><?//= $redirectUrl ?><!--" />-->
+            <meta http-equiv="refresh" content="5;url=<?= $redirectUrl ?>" />
             <link rel="stylesheet" href="css/redirecting.css" />
         <?php } else { ?>
             <link rel="stylesheet" href="css/main.css" />
