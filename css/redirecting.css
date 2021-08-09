@@ -1,0 +1,111 @@
+html, body, * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+html, body {
+    overflow: hidden;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+body {
+    background: rgba(85, 0, 225, 1);
+}
+
+.redirecting {
+    background: rgba(255, 255, 255, 1);
+    border-radius: 15px;
+    padding: 20px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+
+
+    text-align: center;
+}
+
+.redirecting .button {
+    width: fit-content;
+    margin: 15px auto 25px auto;
+    display: block;
+    padding: 10px 20px;
+
+    transition: 0.2s all ease-in-out;
+
+    background: rgba(85, 0, 225, 1);
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 10px;
+
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
+}
+
+.redirecting .button:hover {
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    transform: scale(1.1);
+}
+
+.redirecting-text span {
+    display: block;
+    color: palevioletred;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px 10px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.redirecting-img {
+    display: block;
+    height: 75px;
+    background-position: center;
+    background-image: url('../img/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    margin-bottom: 20px;
+}
+
+footer {
+    width: 100%;
+    margin-top: 20px;
+}
+
+footer .uk-grid {
+    display: grid;
+    grid-template-columns: 60fr 40fr;
+
+    font-size: 10pt;
+    color: #888;
+}
+
+footer .uk-text-right {
+    text-align: right;
+}
+
+footer .uk-grid div:not(.uk-text-right, .uk-margin-small-top) {
+    bottom: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: left;
+}
+
+footer img {
+    margin-top: 5px;
+}
