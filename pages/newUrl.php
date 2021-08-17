@@ -1,5 +1,8 @@
 <div class="uk-background-secondary">
     <div class="uk-container uk-padding">
+        <div class="uk-width-expand uk-margin-large-bottom uk-text-center">
+            <img src="img/kort-logo-white.svg" width="15%" />
+        </div>
         <form class="uk-width-expand" method="post">
             <h3 style="color: white; margin-bottom: 10px; text-align: center">Voer de URL in die verkleind moet worden.</h3>
             <div class="uk-grid uk-grid-collapse" uk-grid="">

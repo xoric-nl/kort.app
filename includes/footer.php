@@ -2,7 +2,7 @@
     <div class="uk-grid uk-grid-small uk-text-small uk-child-width-expand" uk-grid="">
         <div>
             <span>
-                Kort.App (v3.2) is een applicatie gemaakt door <a href="https://xoric.nl/">XORIC</a>.
+                Kort.App (v3.2.1) is een applicatie gemaakt door <a href="https://xoric.nl/">XORIC</a>.
             </span>
         </div>
         <div class="uk-text-right">

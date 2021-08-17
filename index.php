@@ -52,7 +52,7 @@ if ($includeConfig && $includeFunctions) {
         <meta name="robots" content="index, follow">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="language" content="Nederlands">
-        <link rel="icon" type="image/png" href="img/favicon.png" />
+        <link rel="icon" type="image/xml+svg" href="img/kort-icon.svg" />
 
         <!-- COMMON TAGS -->
         <meta charset="utf-8">
